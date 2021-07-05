@@ -4,6 +4,7 @@ import com.learningenglish.dto.PageResult;
 import com.learningenglish.dto.ServiceResult;
 import com.learningenglish.entiy.User;
 import com.learningenglish.service.UserService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +45,18 @@ public class UserController {
         }catch (Exception ex){
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable int id){
+        user.setId(id);
+        userService.create(user);
+        return ResponseEntity.ok(new ServiceResult(HttpStatus.OK.value(), "Success", user));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id){
+        return ResponseEntity.ok(new ServiceResult(HttpStatus.OK.value(), "", userService.findById(id)));
     }
 
 }

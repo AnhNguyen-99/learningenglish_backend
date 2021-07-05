@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -69,6 +70,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User exitByEmail(String email) {
         return userRepository.exitsByEmail(email);
+    }
+
+    @Override
+    public User findById(int id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public User importList(MultipartFile file) throws Exception {
+        return null;
     }
 
     public void addRoles(RoleName roleName, Set<Role> roles) {
