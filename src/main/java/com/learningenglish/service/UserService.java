@@ -31,4 +31,6 @@ public interface UserService {
     List<UserExport> findAllExport();
 
     Page<User> findByUserNameOrEmail(String username, String email, Pageable pageable);
+
+    User changeStatus(User user);
 }

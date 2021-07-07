@@ -70,6 +70,8 @@ public class UserServiceImpl implements UserService {
             });
         }
         newUser.setRoles(roles);
+        if(user.getId() != null)
+            newUser.setId(user.getId());
         return userRepository.save(newUser);
     }
 
@@ -151,6 +153,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findByUserNameOrEmail(String username, String email, Pageable pageable) {
         return userRepository.findAllByUsernameContainsOrEmailContains(username, email, pageable);
+    }
+
+    @Override
+    public User changeStatus(User user) {
+        if(user.getStatus() == true)
+            user.setStatus(false);
+        else
+            user.setStatus(true);
+        return userRepository.save(user);
     }
 
     public void addRoles(RoleName roleName, Set<Role> roles) {

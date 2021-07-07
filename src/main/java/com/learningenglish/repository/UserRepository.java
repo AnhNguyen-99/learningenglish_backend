@@ -21,4 +21,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.username = ?1 OR u.email = ?2")
     Page<User> findAllByUsernameContainsOrEmailContains(String username, String email, Pageable pageable);
+
 }
