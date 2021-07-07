@@ -21,6 +21,11 @@ public class ExamTypeServiceImpl implements ExamTypeService {
 
     @Override
     public ExamType save(ExamType examType) {
+        if(examType.getId() != null){
+            ExamType oldExamType = examTypeRepository.findById(examType.getId()).get();
+            examType.setId(examType.getId());
+            examType.setCreateDate(oldExamType.getCreateDate());
+        }
         return examTypeRepository.save(examType);
     }
 

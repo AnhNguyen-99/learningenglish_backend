@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -29,6 +30,15 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Exam save(Exam exam) {
+        if(exam.getId() != null){
+            Exam oldExam = examRepository.findById(exam.getId()).get();
+            exam.setId(exam.getId());
+            exam.setCreateDate(oldExam.getCreateDate());
+        }else{
+            exam.setCreateDate(new Date());
+            exam.setStatus(true);
+        }
+            exam.setUpdateDate(new Date());
         return examRepository.save(exam);
     }
 

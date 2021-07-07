@@ -25,7 +25,7 @@ public class ExamController {
         return new PageResult(examPage);
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id){
         return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
     }

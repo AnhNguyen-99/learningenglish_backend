@@ -33,6 +33,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /*
+    {@code GET: api/user}
+    GetAll list user
+    */
     @GetMapping("")
     @PreAuthorize("hasRole('Admin')")
     public PageResult getUserByPage(@PageableDefault(page = 0, size = 10, sort = "id")Pageable pageable){
