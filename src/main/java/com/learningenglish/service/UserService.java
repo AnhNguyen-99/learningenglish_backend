@@ -33,4 +33,5 @@ public interface UserService {
     Page<User> findByUserNameOrEmail(String username, String email, Pageable pageable);
 
     User changeStatus(User user);
+
 }

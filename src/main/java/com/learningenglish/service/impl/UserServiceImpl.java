@@ -51,29 +51,63 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getEmail());
-        Set<Role> reqRole = user.getRoles();
-        Set<Role> roles = new HashSet<>();
-        if (reqRole == null) {
-            Role userRole = roleService.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-            roles.add(userRole);
+        User newUser = new User();
+        if (user.getId() == null) {
+            // Set role in user
+            Set<Role> reqRole = user.getRoles();
+            Set<Role> roles = new HashSet<>();
+            if (reqRole == null) {
+                Role userRole = roleService.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                roles.add(userRole);
+            } else {
+                reqRole.forEach(role -> {
+                    switch (role.getName()) {
+                        case ROLE_ADMIN: {
+                            addRoles(RoleName.ROLE_ADMIN, roles);
+                        }
+                        default: {
+                            addRoles(RoleName.ROLE_USER, roles);
+                        }
+                    }
+                });
+            }
+            newUser.setRoles(roles);
+            if (user.getPassword() == null)
+                newUser.setPassword(passwordEncoder.encode("1"));
+            else
+                newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            newUser.setEmail(user.getEmail());
+            newUser.setCreateDate(new Date());
+            newUser.setStatus(true);
         } else {
-            reqRole.forEach(role -> {
-                switch (role.getName()) {
-                    case ROLE_ADMIN: {
-                        addRoles(RoleName.ROLE_ADMIN, roles);
-                    }
-                    default: {
-                        addRoles(RoleName.ROLE_USER, roles);
-                    }
-                }
-            });
-        }
-        newUser.setRoles(roles);
-        if(user.getId() != null)
+            User oldUser = userRepository.findById(user.getId()).get();
             newUser.setId(user.getId());
+            newUser.setUsername(oldUser.getUsername());
+            // Email
+            if (user.getEmail() == null)
+                newUser.setEmail(oldUser.getEmail());
+            else
+                newUser.setEmail(user.getEmail());
+            // Password
+            if (user.getPassword() == null)
+                newUser.setPassword(oldUser.getPassword());
+            else
+                newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            // Status
+            if (user.getStatus() == null)
+                newUser.setStatus(oldUser.getStatus());
+            else
+                newUser.setStatus(user.getStatus());
+            if (user.getRoles() == null)
+                newUser.setRoles(oldUser.getRoles());
+            // CreateDate
+            newUser.setCreateDate(oldUser.getCreateDate());
+            // Login Date
+            newUser.setLastestLoginDate(oldUser.getLastestLoginDate());
+        }
         return userRepository.save(newUser);
     }
+
 
     @Override
     public User exitByEmail(String email) {
@@ -104,10 +138,10 @@ public class UserServiceImpl implements UserService {
             // Kiểm tra file rỗng
             if (lstRow.size() <= 1) {
                 return null;
-            }else{
+            } else {
                 List<User> listUser = new ArrayList<>();
-                Cell headerCellError =lstRow.get(1).createCell(8);
-                for (int i = 2; i< lstRow.size(); i++){
+                Cell headerCellError = lstRow.get(1).createCell(8);
+                for (int i = 2; i < lstRow.size(); i++) {
                     Row row = lstRow.get(i);
                     XSSFWorkbook wb = (XSSFWorkbook) row.createCell(8).getRow().getSheet().getWorkbook();
                     XSSFCell xssfCell = (XSSFCell) row.createCell(8);
@@ -122,7 +156,7 @@ public class UserServiceImpl implements UserService {
                     DataFormatter format = new DataFormatter();
                     if (row.getCell(0) == null || row.getCell(1) == null || row.getCell(2) == null
                             || row.getCell(3) == null || row.getCell(4) == null || row.getCell(5) == null
-                            || row.getCell(6) == null || row.getCell(7) == null){
+                            || row.getCell(6) == null || row.getCell(7) == null) {
                         xssfCell.setCellValue("Không có dữ liệu");
                     }
                 }
@@ -136,7 +170,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.deleteById(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -146,7 +180,9 @@ public class UserServiceImpl implements UserService {
     public List<UserExport> findAllExport() {
         List<User> listUser = userRepository.findAll();
         List<UserExport> listUserExport = new ArrayList<>();
-        listUser.forEach(user->{listUserExport.add(new UserExport(user.getUsername(), user.getEmail()));});
+        listUser.forEach(user -> {
+            listUserExport.add(new UserExport(user.getUsername(), user.getEmail()));
+        });
         return listUserExport;
     }
 
@@ -157,11 +193,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User changeStatus(User user) {
-        if(user.getStatus() == true)
+        if (user.getStatus() == true)
             user.setStatus(false);
         else
             user.setStatus(true);
-        return userRepository.save(user);
+        return create(user);
     }
 
     public void addRoles(RoleName roleName, Set<Role> roles) {

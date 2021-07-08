@@ -17,6 +17,8 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamRepository examRepository;
 
+    @Autowired
+    private ExamService examService;
 
     @Override
     public List<Exam> findAll() {
@@ -30,25 +32,53 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Exam save(Exam exam) {
-        if(exam.getId() != null){
+        Exam newExam = new Exam();
+        if (exam.getId() == null) {
+            newExam.setTitle(exam.getTitle());
+            newExam.setQuestionData(exam.getQuestionData());
+            newExam.setExamTypeId(exam.getExamTypeId());
+            newExam.setStatus(true);
+            newExam.setCreateDate(new Date());
+            newExam.setUpdateDate(new Date());
+        } else {
             Exam oldExam = examRepository.findById(exam.getId()).get();
-            exam.setId(exam.getId());
-            exam.setCreateDate(oldExam.getCreateDate());
-        }else{
-            exam.setCreateDate(new Date());
-            exam.setStatus(true);
+            // Id
+            newExam.setId(exam.getId());
+            // Title
+            if (exam.getTitle() == null)
+                newExam.setTitle(oldExam.getTitle());
+            else
+                newExam.setTitle(exam.getTitle());
+            // Question Data
+            if (exam.getQuestionData() == null)
+                newExam.setQuestionData(oldExam.getQuestionData());
+            else
+                newExam.setQuestionData(exam.getQuestionData());
+            // Status
+            if (exam.getStatus() == null)
+                newExam.setStatus(oldExam.getStatus());
+            else
+                newExam.setStatus(exam.getStatus());
+            // ExamTypeId
+            if (exam.getExamTypeId() == null)
+                newExam.setExamTypeId(oldExam.getExamTypeId());
+            else
+                newExam.setExamTypeId(exam.getExamTypeId());
+            // CreateDate
+            newExam.setCreateDate(oldExam.getCreateDate());
+            // UpdateDate
+            newExam.setUpdateDate(new Date());
         }
-            exam.setUpdateDate(new Date());
-        return examRepository.save(exam);
+        return examRepository.save(newExam);
     }
 
     @Override
     public Exam changeStatus(Exam exam) {
-        if(exam.getStatus() == true)
+        if (exam.getStatus() == true)
             exam.setStatus(false);
         else
             exam.setStatus(true);
-        return examRepository.save(exam);
+        return save(exam);
     }
 
     @Override
@@ -56,7 +86,7 @@ public class ExamServiceImpl implements ExamService {
         try {
             examRepository.deleteById(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

@@ -10,13 +10,14 @@ import java.util.Objects;
 @Table(name = "question")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "question_type_id")
     private Integer questionTypeId;
@@ -48,4 +49,5 @@ public class Question {
     public int hashCode() {
         return Objects.hash(id, questionTypeId, questionText, point, status, createDate, updateDate);
     }
+
 }
