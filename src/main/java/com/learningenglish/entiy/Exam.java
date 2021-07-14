@@ -18,10 +18,7 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
-
-    @Column(name = "exam_type_id")
-    private Integer examTypeId;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -37,7 +34,6 @@ public class Exam {
 
     @Column(name = "update_date")
     private Date updateDate;
-
 
     @Override
     public boolean equals(Object o) {

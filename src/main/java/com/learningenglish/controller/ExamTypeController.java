@@ -7,25 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/exam_type")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ExamTypeController {
-
     @Autowired
     private ExamTypeService examTypeService;
 
     @GetMapping("")
     public ResponseEntity<List<ExamType>> getAll(){
-        List<ExamType> list = examTypeService.findByAll();
-        if(list != null){
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        }else{
-            return new ResponseEntity("false", HttpStatus.NOT_FOUND);
-        }
+        List<ExamType> listExam = examTypeService.findAll();
+        return new ResponseEntity<>(listExam, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -33,22 +27,19 @@ public class ExamTypeController {
         return new ResponseEntity<>(examTypeService.findById(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id){
+        return new ResponseEntity<>(examTypeService.delete(id), HttpStatus.OK);
+    }
+
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody ExamType examType){
-        examType.setCreateDate(new Date());
-        examType.setUpdateDate(new Date());
+    public ResponseEntity<?> insert(@RequestBody ExamType examType){
         return new ResponseEntity<>(examTypeService.save(examType), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody ExamType examType, @PathVariable int id){
         examType.setId(id);
-        examType.setUpdateDate(new Date());
         return new ResponseEntity<>(examTypeService.save(examType), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable int id){
-        return new ResponseEntity<>(examTypeService.delete(id), HttpStatus.OK);
     }
 }

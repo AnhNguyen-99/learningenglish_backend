@@ -9,7 +9,6 @@ import java.util.Objects;
 @Table(name = "choice")
 @Getter
 @Setter
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Choice {

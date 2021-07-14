@@ -7,12 +7,8 @@ import java.util.List;
 
 @Service
 public interface ExamTypeService {
-
+    List<ExamType> findAll();
     ExamType findById(int id);
-
     ExamType save(ExamType examType);
-
-    List<ExamType> findByAll();
-
     Boolean delete(int id);
 }

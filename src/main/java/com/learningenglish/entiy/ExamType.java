@@ -43,4 +43,5 @@ public class ExamType {
     public int hashCode() {
         return Objects.hash(id, name, code, createDate, updateDate);
     }
+
 }
