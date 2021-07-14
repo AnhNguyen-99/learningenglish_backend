@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,12 @@ public class ExamTypeController {
     @GetMapping("")
     public ResponseEntity<List<ExamType>> getAll(){
         List<ExamType> listExam = examTypeService.findAll();
-        return new ResponseEntity<>(listExam, HttpStatus.OK);
+        if(listExam != null){
+            return new ResponseEntity<>(listExam, HttpStatus.OK);
+        }else{
+            return new ResponseEntity("false", HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @GetMapping("/{id}")
@@ -34,12 +40,15 @@ public class ExamTypeController {
 
     @PostMapping("")
     public ResponseEntity<?> insert(@RequestBody ExamType examType){
+        examType.setCreateDate(new Date());
+        examType.setUpdateDate(new Date());
         return new ResponseEntity<>(examTypeService.save(examType), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody ExamType examType, @PathVariable int id){
         examType.setId(id);
+        examType.setUpdateDate(new Date());
         return new ResponseEntity<>(examTypeService.save(examType), HttpStatus.OK);
     }
 }

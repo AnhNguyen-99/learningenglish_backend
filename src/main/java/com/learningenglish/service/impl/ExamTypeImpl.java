@@ -27,6 +27,8 @@ public class ExamTypeImpl implements ExamTypeService {
     public ExamType save(ExamType examType) {
         if(examType.getId() != null){
             ExamType saveExam = examRepon.findById(examType.getId()).get();
+            examType.setId(examType.getId());
+            examType.setCreateDate(saveExam.getCreateDate());
         }
         return examRepon.save(examType);
     }
