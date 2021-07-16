@@ -48,7 +48,6 @@ public class ExamTypeController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody ExamType examType, @PathVariable int id){
         examType.setId(id);
-        examType.setUpdateDate(new Date());
         return new ResponseEntity<>(examTypeService.save(examType), HttpStatus.OK);
     }
 }

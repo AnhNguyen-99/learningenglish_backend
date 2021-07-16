@@ -6,6 +6,7 @@ import com.learningenglish.service.ExamTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -29,6 +30,7 @@ public class ExamTypeImpl implements ExamTypeService {
             ExamType saveExam = examRepon.findById(examType.getId()).get();
             examType.setId(examType.getId());
             examType.setCreateDate(saveExam.getCreateDate());
+            examType.setUpdateDate(new Date());
         }
         return examRepon.save(examType);
     }
