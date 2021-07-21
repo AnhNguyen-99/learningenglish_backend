@@ -1,14 +1,12 @@
 package com.learningenglish.repository;
 
-import com.learningenglish.entiy.Role;
-import com.learningenglish.entiy.RoleName;
-import com.learningenglish.entiy.User;
+import com.learningenglish.entity.Role;
+import com.learningenglish.entity.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
-@Component
+@Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
     Optional<Role> findByName(RoleName name);
 }

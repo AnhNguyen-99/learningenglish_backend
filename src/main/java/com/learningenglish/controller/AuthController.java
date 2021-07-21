@@ -1,6 +1,6 @@
 package com.learningenglish.controller;
 
-import com.learningenglish.entiy.User;
+import com.learningenglish.entity.User;
 import com.learningenglish.payload.JwtResponse;
 import com.learningenglish.payload.LoginRequest;
 import com.learningenglish.repository.UserRepository;
@@ -8,7 +8,6 @@ import com.learningenglish.security.jwt.JwtProvider;
 import com.learningenglish.security.service.UserPrincipal;
 import com.learningenglish.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

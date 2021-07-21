@@ -1,6 +1,6 @@
 package com.learningenglish.security.service;
 
-import com.learningenglish.entiy.User;
+import com.learningenglish.entity.User;
 import com.learningenglish.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

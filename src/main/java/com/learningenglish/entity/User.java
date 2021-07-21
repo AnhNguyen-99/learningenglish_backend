@@ -1,10 +1,12 @@
-package com.learningenglish.entiy;
+package com.learningenglish.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,24 +14,39 @@ import java.util.Set;
 @Table(name = "user")
 @Setter
 @Getter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name = "username")
     private String username;
+
     @Column(name = "password")
     private String password;
+
+    @Column(name = "fullname")
+    private String fullname;
+
     @Column(name = "email")
     private String email;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "status")
     private Boolean status;
-    @Column(name = "createDate")
+
+    @Column(name = "create_date")
     private Date createDate;
+
+    @Column(name = "update_date")
+    private Date updateDate;
+
     @Column(name = "lastest_login_date")
     private Date lastestLoginDate;
 
@@ -39,23 +56,16 @@ public class User {
                     @JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;
 
-    public User(String username, String password, String email){
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.status = true;
-        this.createDate = new Date();
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(status, user.status) && Objects.equals(createDate, user.createDate) && Objects.equals(lastestLoginDate, user.lastestLoginDate);
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(fullname, user.fullname) && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(status, user.status) && Objects.equals(createDate, user.createDate) && Objects.equals(updateDate, user.updateDate) && Objects.equals(lastestLoginDate, user.lastestLoginDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, status, createDate, lastestLoginDate);
+        return Objects.hash(id, username, password, fullname, email, phoneNumber, status, createDate, updateDate, lastestLoginDate);
     }
 }

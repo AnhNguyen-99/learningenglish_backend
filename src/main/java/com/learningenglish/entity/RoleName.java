@@ -1,4 +1,4 @@
-package com.learningenglish.entiy;
+package com.learningenglish.entity;
 
 public enum RoleName {
     ROLE_ADMIN("ROLE_ADMIN"),

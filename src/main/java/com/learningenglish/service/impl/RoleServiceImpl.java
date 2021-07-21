@@ -1,7 +1,7 @@
 package com.learningenglish.service.impl;
 
-import com.learningenglish.entiy.Role;
-import com.learningenglish.entiy.RoleName;
+import com.learningenglish.entity.Role;
+import com.learningenglish.entity.RoleName;
 import com.learningenglish.repository.RoleRepository;
 import com.learningenglish.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

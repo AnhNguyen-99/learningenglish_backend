@@ -1,7 +1,7 @@
 package com.learningenglish.service;
 
-import com.learningenglish.entiy.Role;
-import com.learningenglish.entiy.RoleName;
+import com.learningenglish.entity.Role;
+import com.learningenglish.entity.RoleName;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
