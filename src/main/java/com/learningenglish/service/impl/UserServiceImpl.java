@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
             newUser.setId(user.getId());
             newUser.setUsername(oldUser.getUsername());
             //Username
-            if(user.getUsername() == null)
+            if (user.getUsername() == null)
                 newUser.setUsername(oldUser.getUsername());
             else
                 newUser.setUsername(user.getUsername());
@@ -98,17 +98,17 @@ public class UserServiceImpl implements UserService {
             else
                 newUser.setEmail(user.getEmail());
             // Password
-            if (user.getPassword() == null)
-                newUser.setPassword(oldUser.getPassword());
-            else
-                newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+//            if (user.getPassword() == null)
+            newUser.setPassword(oldUser.getPassword());
+//            else
+//                newUser.setPassword(user.getPassword());
             // Fullname
-            if(user.getFullname() == null)
+            if (user.getFullname() == null)
                 newUser.setFullname(oldUser.getFullname());
             else
                 newUser.setFullname(user.getFullname());
             // PhoneNumber
-            if(user.getPhoneNumber() == null)
+            if (user.getPhoneNumber() == null)
                 newUser.setPhoneNumber(oldUser.getPhoneNumber());
             else
                 newUser.setPhoneNumber(user.getPhoneNumber());
@@ -117,8 +117,38 @@ public class UserServiceImpl implements UserService {
                 newUser.setStatus(oldUser.getStatus());
             else
                 newUser.setStatus(user.getStatus());
-            if (user.getRoles() == null)
-                newUser.setRoles(oldUser.getRoles());
+            // Roles
+            Set<Role> reqRole = user.getRoles();
+            Set<Role> oldRole = oldUser.getRoles();
+            Set<Role> roles = new HashSet<>();
+            if (reqRole == null) {
+                oldRole.forEach(role -> {
+                    switch (role.getName()) {
+                        case ROLE_ADMIN: {
+                            addRoles(RoleName.ROLE_ADMIN, roles);
+                            break;
+                        }
+                        case ROLE_USER: {
+                            addRoles(RoleName.ROLE_USER, roles);
+                            break;
+                        }
+                    }
+                });
+            } else {
+                reqRole.forEach(role -> {
+                    switch (role.getName()) {
+                        case ROLE_ADMIN: {
+                            addRoles(RoleName.ROLE_ADMIN, roles);
+                            break;
+                        }
+                        case ROLE_USER: {
+                            addRoles(RoleName.ROLE_USER, roles);
+                            break;
+                        }
+                    }
+                });
+            }
+            newUser.setRoles(roles);
             // CreateDate
             newUser.setCreateDate(oldUser.getCreateDate());
             // Login Date
