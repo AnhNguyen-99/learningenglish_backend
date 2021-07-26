@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class ExamServiceImpl implements ExamService {
+public class  ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamReponsitory examRepon;

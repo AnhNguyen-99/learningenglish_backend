@@ -47,6 +47,6 @@ public class ExamController {
 
     @DeleteMapping(value = "/{id}")
     public  ResponseEntity<?> delete(@PathVariable int id){
-        return new ResponseEntity<>(examService.delete(id), HttpStatus.OK);
+        return  new ResponseEntity<>(examService.delete(id), HttpStatus.OK);
     }
 }
