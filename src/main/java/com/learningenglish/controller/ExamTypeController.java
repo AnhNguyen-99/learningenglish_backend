@@ -1,7 +1,6 @@
 package com.learningenglish.controller;
 
 import com.learningenglish.entiy.ExamType;
-import com.learningenglish.repository.ExamTypeRepository;
 import com.learningenglish.service.ExamTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

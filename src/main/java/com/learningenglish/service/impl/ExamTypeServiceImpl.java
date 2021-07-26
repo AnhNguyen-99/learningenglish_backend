@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class ExamTypeImpl implements ExamTypeService {
+public class ExamTypeServiceImpl implements ExamTypeService {
 
     @Autowired
     private ExamTypeRepository examRepon;
@@ -37,6 +37,8 @@ public class ExamTypeImpl implements ExamTypeService {
             if(examType.getName() == null){
                 examType.setName(saveExam.getName());
             }
+//          examType.setName(saveExam.getName());
+//          examType.setCode(saveExam.getCode());
         }
         return examRepon.save(examType);
     }
