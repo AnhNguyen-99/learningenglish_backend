@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface QuestionTypeService {
+public  interface QuestionTypeService {
     List<QuestionType> findAll();
     boolean delete(int id);
     QuestionType findId(int id);

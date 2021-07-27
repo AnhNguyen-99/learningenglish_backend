@@ -20,7 +20,7 @@ public class QuestionTypeController {
     private QuestionTypeService questionTypeService;
 
     @GetMapping("")
-    public ResponseEntity<List<QuestionType>> getAll(){
+    public ResponseEntity<List<QuestionType>>  getAll(){
         List<QuestionType> questionTypes = questionTypeService.findAll();
         if(questionTypes != null) {
             return new ResponseEntity<>(questionTypes, HttpStatus.OK);

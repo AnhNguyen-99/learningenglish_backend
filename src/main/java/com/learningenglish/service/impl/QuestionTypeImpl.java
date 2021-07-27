@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class QuestionTypeImpl implements QuestionTypeService {
+public class  QuestionTypeImpl implements QuestionTypeService {
 
     @Autowired
     private QuestionTypeReponsitory questionTypeReponsitory;
